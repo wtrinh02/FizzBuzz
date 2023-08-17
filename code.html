@@ -2,7 +2,7 @@
 <html lang="en" class="h-100">
 
 <head>
-    <title>App Name: A Coding Project By Wesley Trinh</title>
+    <title>FizzBuzz: A Coding Project By Wesley Trinh</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -21,9 +21,9 @@
 
 <body class="d-flex flex-column h-100">
     <!-- ==== Nav Section ====-->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top nav">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#"><img src="img/logoicon.png" class="d-inline-block align-text-top" width="30" height="24"> APP NAME</a>
+            <a class="navbar-brand" href="#"><img src="img/logoicon.png" class="d-inline-block align-text-top" width="30" height="24"> FizzBuzz</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -40,7 +40,7 @@
                         <a class="nav-link active" aria-current="page" href="code.html">Code</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" target="_blank" href="#">Git Repo</a>
+                        <a class="nav-link" target="_blank" href="https://github.com/wtrinh02/FizzBuzz">Git Repo</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" target="_blank" href="#">About</a>
@@ -53,21 +53,96 @@
     <!-- ==== Main Section ====-->
     <main class="flex-shrink-0">
         <div class="container py-5 px-5 mt-5">
-            <h2 class="border-1 border-bottom border-dark">The Code for APP NAME</h2>
+            <h2 class="border-1 border-bottom border-dark">The Code for FizzBuzz</h2>
             <div class="row row-cols-1 row-cols-lg-2">
                 <div class="col-lg-8">
                     <pre class="line-numbers"><code class="language-javascript">
-                        //Call hello World
-                        function HelloWorld(){
-                            alert("Hello World");
+                        //get the values from user
+                        function getValues(){
+                        
+                            let fValue = document.getElementById("fizzValue").value;
+                            let bValue = document.getElementById("buzzValue").value;
+                            
+                            fValue = parseInt(fValue);
+                            bValue = parseInt(bValue);
+                        
+                            if (Number.isInteger(fValue) && Number.isInteger(bValue)){
+                                let results = fizzBuzz(fValue, bValue);
+                                displayTable(results);
+                            }
+                            else{
+                                alert("Both Fizz Value and Buzz Value Need to be a Number!")
+                            }
+                        
+                        
+                        }
+                        
+                        function fizzBuzz(fValue, bValue){
+                            let results = [];
+                        
+                            for (let i = 1; i <= 100; i++){
+                                if (i % fValue == 0 && i % bValue == 0){
+                                    results.push("FizzBuzz");
+                                }
+                                else if (i % fValue == 0){
+                                    results.push("Fizz");
+                                }
+                                else if (i % bValue == 0){
+                                    results.push("Buzz");
+                                }
+                                else{
+                                    results.push(i);
+                                }
+                            }
+                        
+                            return results
+                        }
+                        
+                        function displayTable(fbData){
+                        
+                            //get the table body element from the page
+                            let tableBody = document.getElementById("results");
+                        
+                            //get the row from the template
+                            let templateRow = document.getElementById("fbTemplate");
+                        
+                            //clear table first
+                            tableBody.innerHTML = "";
+                        
+                            for (let i = 0; i < fbData.length; i += 5) {
+                                let tableRow = document.importNode(templateRow.content, true);
+                                //grab only the columns in the template
+                                let rowCols = tableRow.querySelectorAll("td");
+                        
+                                rowCols[0].classList.add(fbData[i]);
+                                rowCols[0].textContent = fbData[i];
+                               
+                                rowCols[1].classList.add(fbData[i+ 1]);
+                                rowCols[1].textContent = fbData[i + 1];
+                               
+                                rowCols[2].classList.add(fbData[i+2]);
+                                rowCols[2].textContent = fbData[i + 2];
+                               
+                                rowCols[3].classList.add(fbData[i+3]);
+                                rowCols[3].textContent = fbData[i + 3];
+                               
+                                rowCols[4].classList.add(fbData[i+4]);
+                                rowCols[4].textContent = fbData[i + 4];
+                        
+                                tableBody.appendChild(tableRow);
+                            }
                         }
                     </code>
                     </pre>
                 </div>
                 <div class="col-lg-4">
-                    <p>The Code is structured in one function</p>
-                    <h5>Hello World</h5>
-                    <p>Hello World is a function that displays an alert with a message of "Hello World"</p>
+                    <p>The Code is structured in three functions</p>
+                    <h5>getValues</h5>
+                    <p>getValues is the controller function that calls fizzBuzz and displayTable. The function starts off by getting the fizz value and buzz value from the user by grabbing the value from the DOM using getElementById. It then parses the values into a number and checks if the inputs are valid. If so, the function will call fizzBuzz to get the resulting table and call displayTable to display it. Else if the inputs are invalid, the user will be alerted to fix them.</p>
+                    <h5>fizzBuzz</h5>
+                    <p>fizzBuzz is a function that creates an array of numbers , "Fizz", "Buzz", or "Fizzbuzz". The function does so by looping 100 times and checking if the current index is divisble by the fizz value, buzz value, or both by using the modulo operator(%). If the current index is divisible by both, "FizzBuzz" would be pushed into the array. If it is only divisible by the fizz value, "Fizz" would be pushed into the array. If it is only divisible by the buzz value, "Buzz" would be pushed into the array. Else the index would be pushed into the array. Finally the function, returns the completed array. </p>
+                    <h5>displayTable</h5>
+                    <p>displayTable is a function that displays the table to the user. It does so by modifying html elements of the table. To do so we get the table element and a template created in html using getElementById. Then we clear the table's html so each time the button is pressed, a new table can be created. Then looping through the array passed through, the function creates the table in batches of 5 elements. To do so, the function creates a row (tableRow) using the template (templateRow) by importNode. Then it selects all instances of "td" in tableRow using querySelectorAll and add them to the array rowCols. Finally for each td element, the function changes the textContent to whatever the array value is to display and adds a class to it to change its color. Repeat until all values are added to the table.</p>
                 </div>
             </div>
         </div>
